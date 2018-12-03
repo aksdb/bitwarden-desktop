@@ -8,6 +8,9 @@
   "favorites": {
     "message": "Favoriten"
   },
+  "TOTP": {
+    "message": "TOTP"
+  },
   "types": {
     "message": "Typen"
   },
