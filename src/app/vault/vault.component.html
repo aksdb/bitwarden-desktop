@@ -2,6 +2,7 @@
     <app-vault-groupings id="groupings"
                          (onAllClicked)="clearGroupingFilters()"
                          (onFavoritesClicked)="filterFavorites()"
+                         (onTOTPClicked)="filterTOTP()"
                          (onCipherTypeClicked)="filterCipherType($event)"
                          (onFolderClicked)="filterFolder($event.id)"
                          (onAddFolder)="addFolder()"

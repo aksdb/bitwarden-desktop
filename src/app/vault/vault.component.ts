@@ -65,6 +65,7 @@ export class VaultComponent implements OnInit, OnDestroy {
     action: string;
     cipherId: string = null;
     favorites: boolean = false;
+    totp: boolean = false;
     type: CipherType = null;
     folderId: string = null;
     collectionId: string = null;
@@ -187,6 +188,9 @@ export class VaultComponent implements OnInit, OnDestroy {
             if (params.favorites) {
                 this.groupingsComponent.selectedFavorites = true;
                 await this.filterFavorites();
+            } else if (params.totp) {
+                this.groupingsComponent.selectedTOTP = true;
+                await this.filterTOTP();
             } else if (params.type) {
                 const t = parseInt(params.type, null);
                 this.groupingsComponent.selectedType = t;
@@ -433,6 +437,14 @@ export class VaultComponent implements OnInit, OnDestroy {
         this.go();
     }
 
+    async filterTOTP() {
+        this.ciphersComponent.searchPlaceholder = this.i18nService.t('searchTOTP');
+        await this.ciphersComponent.load((c) => c.login && c.login.totp && c.login.totp.length > 0);
+        this.clearFilters();
+        this.totp = true;
+        this.go();
+    }
+
     async filterCipherType(type: CipherType) {
         this.ciphersComponent.searchPlaceholder = this.i18nService.t('searchType');
         await this.ciphersComponent.load((c) => c.type === type);
@@ -551,6 +563,7 @@ export class VaultComponent implements OnInit, OnDestroy {
         this.folderId = null;
         this.collectionId = null;
         this.favorites = false;
+        this.totp = false;
         this.type = null;
         this.addCollectionIds = null;
         this.addType = null;
@@ -563,6 +576,7 @@ export class VaultComponent implements OnInit, OnDestroy {
                 action: this.action,
                 cipherId: this.cipherId,
                 favorites: this.favorites ? true : null,
+                totp: this.totp ? true : null,
                 type: this.type,
                 folderId: this.folderId,
                 collectionId: this.collectionId,
